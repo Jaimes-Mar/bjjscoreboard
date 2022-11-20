@@ -1,9 +1,10 @@
-import tkinter
+import tkinter as tk
 import time
 from tkinter import messagebox
 
+
 # window setup()
-window = tkinter.Tk()
+window = tk.Tk()
 window.title("BJJ Scoreboard")
 window.geometry('1080x720')
 
@@ -12,9 +13,9 @@ score_a = 0
 score_b = 0
 
 # Declaration of time variables
-hour=tkinter.StringVar()
-minute=tkinter.StringVar()
-second=tkinter.StringVar()
+hour=tk.StringVar()
+minute=tk.StringVar()
+second=tk.StringVar()
 
 # setting the default value as 0
 hour.set("00")
@@ -22,17 +23,17 @@ minute.set("00")
 second.set("00")
 
 # Use of Entry class to take input from the user
-hourEntry= tkinter.Entry(window, width=3, font=("Arial",18,""),
+hourEntry= tk.Entry(window, width=3, font=("Arial",18,""),
                  textvariable=hour)
-hourEntry.grid(row=9, column=3)
+hourEntry.grid(row=1, column=4)
   
-minuteEntry= tkinter.Entry(window, width=3, font=("Arial",18,""),
+minuteEntry= tk.Entry(window, width=3, font=("Arial",18,""),
                    textvariable=minute)
-minuteEntry.grid(row=10, column=3)
+minuteEntry.grid(row=2, column=4)
   
-secondEntry= tkinter.Entry(window, width=3, font=("Arial",18,""),
+secondEntry= tk.Entry(window, width=3, font=("Arial",18,""),
                    textvariable=second)
-secondEntry.grid(row=11, column=3)
+secondEntry.grid(row=3, column=4)
 
 def submit():
     try:
@@ -70,86 +71,83 @@ def submit():
         # when temp value = 0; then a messagebox pop's up
         # with a message:"Time's up"
         if (temp == 0):
-            messagebox.showinfo("BJJ scoredboard", "TIME match is over ")
+            messagebox.showinfo("BJJ scoredboard", "TIME: Your match is over ")
+            reset_both()
         # after every one sec the value of temp will be decremented
         # by one
         temp -= 1
  
 # button widget
-btn = tkinter.Button(window, text='Enter time and then click her to begin your match', bd='5',
-             command= submit)
-btn.grid(row=12, column=3)
+btn = tk.Button(window, text='Enter time\n and then click here\n to begin your match',
+             command= submit,width= 15)
+btn.grid(row=5, column=3)
 
 #functions
+def min_5():
+    hour.set("00")
+    minute.set("05")
+    second.set("0")
+    submit()
+    
 def red_2():
 	global score_a
 	score_a = score_a + 2
 	display_a.config(text = str(score_a))
-	display_a.grid(row = 2, column = 0)
- 
+
 def red_3():
 	global score_a
 	score_a = score_a + 3
 	display_a.config(text = str(score_a))
-	display_a.grid(row = 2, column = 0)
  
 def red_4():
 	global score_a
 	score_a = score_a + 4
 	display_a.config(text = str(score_a))
-	display_a.grid(row = 2, column = 0)
 
 def blue_2():
 	global score_b
 	score_b = score_b + 2
 	display_b.config(text = str(score_b))
-	display_b.grid(row = 2, column = 1)
  
 def blue_3():
 	global score_b
 	score_b = score_b + 3
 	display_b.config(text = str(score_b))
-	display_b.grid(row = 2, column = 1)
 
 def blue_4():
 	global score_b
 	score_b = score_b + 4
 	display_b.config(text = str(score_b))
-	display_b.grid(row = 2, column = 1)
 
 def red_min1():
 	global score_a
 	score_a = score_a - 1
 	display_a.config(text = str(score_a))
-	display_a.grid(row = 2, column = 0)
 
 def blue_min1():
 	global score_b
 	score_b = score_b - 1
 	display_b.config(text = str(score_b))
-	display_b.grid(row = 2, column = 1)
 
 def reset_a():
 	global score_a
 	score_a = 0
 	display_a.config(text = str(score_a))
-	display_a.grid(row = 2, column = 0)
 
 def reset_b():
 	global score_b
 	score_b = 0
 	display_b.config(text = str(score_b))
-	display_b.grid(row = 2, column = 1)
  
 def reset_both():
 	global score_b
 	score_b = 0
 	display_b.config(text = str(score_b))
-	display_b.grid(row = 2, column = 1)
+
 	global score_a
 	score_a = 0
 	display_a.config(text = str(score_a))
-	display_a.grid(row = 2, column = 0)
+
  
 def kill():
     window.destroy()
@@ -157,33 +155,36 @@ def kill():
 
 
 #scoreboard labels
-tkinter.Label(window, text = "Red corner", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 0)
-tkinter.Label(window, text = "Blue corner", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 1)
-
+tk.Label(window, text = "Red corner", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 0, sticky = "nsew")
+tk.Label(window, text = "Blue corner", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 1, sticky = "nsew")
+tk.Label(window, text = "Hour", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 5)
+tk.Label(window, text = "mins", font=("Helvetica", 35, 'bold')).grid(row = 2, column = 5)
+tk.Label(window, text = "secs", font=("Helvetica", 35, 'bold')).grid(row = 3, column = 5)
 #Team A Score Display
-display_a = tkinter.Label(window, text = str(score_a), font=("Helvetica", 125))
+display_a = tk.Label(window, text = str(score_a), font=("Helvetica", 125))
 display_a.grid(row = 2, column = 0)
 #Team B Score Display
-display_b = tkinter.Label(window, text = str(score_b), font=("Helvetica", 125))
+display_b = tk.Label(window, text = str(score_b), font=("Helvetica", 125))
 display_b.grid(row = 2, column = 1)
 
 
 
 #score buttons
-button1 = tkinter.Button(window, text = "+2 red", command = red_2).grid(row = 3, column = 0, sticky = "nsew")
-button1 = tkinter.Button(window, text = "+3 red", command = red_3).grid(row = 4, column = 0, sticky = "nsew")
-button1 = tkinter.Button(window, text = "+4 red", command = red_4).grid(row = 5, column = 0, sticky = "nsew")
-button2 = tkinter.Button(window, text = "+2 Blue ", command = blue_2).grid(row = 3, column = 1, sticky = "nsew")
-button2 = tkinter.Button(window, text = "+3 Blue ", command = blue_3).grid(row = 4, column = 1, sticky = "nsew")
-button2 = tkinter.Button(window, text = "+4 Blue ", command = blue_4).grid(row = 5, column = 1, sticky = "nsew")
-button3 = tkinter.Button(window, text = "-1 red", command = red_min1).grid(row = 6, column = 0, sticky = "nsew")
-button3 = tkinter.Button(window, text = "-1 Blue", command = blue_min1).grid(row = 6, column = 1, sticky = "nsew")
+button1 = tk.Button(window, text = "+2 red", command = red_2,height = 3).grid(row = 3, column = 0, sticky = "nsew")
+button1 = tk.Button(window, text = "+3 red", command = red_3,height = 3).grid(row = 4, column = 0, sticky = "nsew")
+button1 = tk.Button(window, text = "+4 red", command = red_4,height = 3).grid(row = 5, column = 0, sticky = "nsew")
+button2 = tk.Button(window, text = "+2 Blue ", command = blue_2).grid(row = 3, column = 1, sticky = "nsew")
+button2 = tk.Button(window, text = "+3 Blue ", command = blue_3).grid(row = 4, column = 1, sticky = "nsew")
+button2 = tk.Button(window, text = "+4 Blue ", command = blue_4).grid(row = 5, column = 1, sticky = "nsew")
+button3 = tk.Button(window, text = "-1 red", command = red_min1,height = 3).grid(row = 6, column = 0, sticky = "nsew")
+button3 = tk.Button(window, text = "-1 Blue", command = blue_min1).grid(row = 6, column = 1, sticky = "nsew")
 
 #redo and kill buttons
-redo_a = tkinter.Button(window, text = "Reset Red", command = reset_a).grid(row = 6, column = 2)
-redo_a = tkinter.Button(window, text = "Reset Blue", command = reset_b).grid(row = 5, column = 2)
-redo_both = tkinter.Button(window, text = "Reset Both", command = reset_both).grid(row = 7, column = 2)
-killbutton = tkinter.Button(window, text = "close program", command = kill).grid(row = 8, column = 2)
+redo_a = tk.Button(window, text = "Reset Red", command = reset_a,height = 3, width = 8).grid(row = 4, column = 2, sticky = "nsew")
+redo_a = tk.Button(window, text = "Reset Blue", command = reset_b,height = 3).grid(row = 3, column = 2, sticky = "nsew")
+redo_both = tk.Button(window, text = "Reset Both", command = reset_both,height = 3).grid(row = 5, column = 2, sticky = "nsew")
+killbutton = tk.Button(window, text = "close program", command = kill,height = 3).grid(row = 6, column = 2, sticky = "nsew")
+min5button = tk.Button(window, text = "5 min program", command = min_5,height = 3).grid(row = 4, column = 3, sticky = "nsew")
 
 #main loop to keep gui window open
 window.mainloop()
