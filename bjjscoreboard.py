@@ -77,10 +77,7 @@ def submit():
         # by one
         temp -= 1
  
-# button widget
-btn = tk.Button(window, text='Enter time\n and then click here\n to begin your match',
-             command= submit,width= 15)
-btn.grid(row=5, column=3)
+
 
 #functions
 def min_5():
@@ -88,7 +85,19 @@ def min_5():
     minute.set("05")
     second.set("0")
     submit()
+
+def min_3():
+    hour.set("00")
+    minute.set("03")
+    second.set("0")
+    submit()
     
+def min_6():
+    hour.set("00")
+    minute.set("06")
+    second.set("0")
+    submit()
+        
 def red_2():
 	global score_a
 	score_a = score_a + 2
@@ -153,6 +162,9 @@ def kill():
     window.destroy()
     return None
 
+def _from_rgb(rgb):
+    return "#%02x%02x%02x" % rgb 
+
 
 #scoreboard labels
 tk.Label(window, text = "Red corner", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 0, sticky = "nsew")
@@ -169,22 +181,39 @@ display_b.grid(row = 2, column = 1)
 
 
 
+#Match buttons
+Custom_match_btn = tk.Button(window, text='For custom match \n Enter time\n and then click here\n to begin your match',
+                             command= submit,height=4).grid(row=6, column=3)
+min5button = tk.Button(window, text = "5 min program", command = min_5,height = 3).grid(row = 4, column = 3, sticky = "nsew")
+
+min3button = tk.Button(window, text = "3 min program", command = min_3,height = 3).grid(row = 3, column = 3, sticky = "nsew")
+
+min6button = tk.Button(window, text = "6 min program", command = min_6,height = 3).grid(row = 5, column = 3, sticky = "nsew")
+
 #score buttons
-button1 = tk.Button(window, text = "+2 red", command = red_2,height = 3).grid(row = 3, column = 0, sticky = "nsew")
-button1 = tk.Button(window, text = "+3 red", command = red_3,height = 3).grid(row = 4, column = 0, sticky = "nsew")
-button1 = tk.Button(window, text = "+4 red", command = red_4,height = 3).grid(row = 5, column = 0, sticky = "nsew")
-button2 = tk.Button(window, text = "+2 Blue ", command = blue_2).grid(row = 3, column = 1, sticky = "nsew")
-button2 = tk.Button(window, text = "+3 Blue ", command = blue_3).grid(row = 4, column = 1, sticky = "nsew")
-button2 = tk.Button(window, text = "+4 Blue ", command = blue_4).grid(row = 5, column = 1, sticky = "nsew")
-button3 = tk.Button(window, text = "-1 red", command = red_min1,height = 3).grid(row = 6, column = 0, sticky = "nsew")
-button3 = tk.Button(window, text = "-1 Blue", command = blue_min1).grid(row = 6, column = 1, sticky = "nsew")
+red_p2_btn = tk.Button(window, text = "+2 red", command = red_2,height = 4,bg=_from_rgb((0, 247, 0)),
+                       activebackground=_from_rgb((0, 247, 0))).grid(row = 3, column = 0, sticky = "nsew")
+red_p3_btn = tk.Button(window, text = "+3 red", command = red_3,height = 4,bg=_from_rgb((0, 247, 0)),
+                       activebackground=_from_rgb((0, 247, 0))).grid(row = 4, column = 0, sticky = "nsew")
+red_p4_btn = tk.Button(window, text = "+4 red", command = red_4,height = 4,bg=_from_rgb((0, 247, 0)),
+                       activebackground=_from_rgb((0, 247, 0))).grid(row = 5, column = 0, sticky = "nsew")
+blue_p2_btn = tk.Button(window, text = "+2 Blue ", command = blue_2,bg=_from_rgb((0, 247, 0)),
+                        activebackground=_from_rgb((0, 247, 0))).grid(row = 3, column = 1, sticky = "nsew")
+blue_p3_btn = tk.Button(window, text = "+3 Blue ", command = blue_3,bg=_from_rgb((0, 247, 0)),
+                        activebackground=_from_rgb((0, 247, 0))).grid(row = 4, column = 1, sticky = "nsew")
+blue_p4_btn = tk.Button(window, text = "+4 Blue ", command = blue_4,bg=_from_rgb((0, 247, 0)),
+                        activebackground=_from_rgb((0, 247, 0))).grid(row = 5, column = 1, sticky = "nsew")
+red_m1_btn = tk.Button(window, text = "-1 red", command = red_min1,height = 4,bg=_from_rgb((247,0, 0)),
+                       activebackground=_from_rgb((247, 0, 0))).grid(row = 6, column = 0, sticky = "nsew")
+blue_m1_btn = tk.Button(window, text = "-1 Blue", command = blue_min1,bg=_from_rgb((247,0, 0)),
+                        activebackground=_from_rgb((247,0, 0))).grid(row = 6, column = 1, sticky = "nsew")
 
 #redo and kill buttons
-redo_a = tk.Button(window, text = "Reset Red", command = reset_a,height = 3, width = 8).grid(row = 4, column = 2, sticky = "nsew")
-redo_a = tk.Button(window, text = "Reset Blue", command = reset_b,height = 3).grid(row = 3, column = 2, sticky = "nsew")
+reset_red = tk.Button(window, text = "Reset Red", command = reset_a,height = 3, width = 8).grid(row = 4, column = 2, sticky = "nsew")
+reset_blue = tk.Button(window, text = "Reset Blue", command = reset_b,height = 3).grid(row = 3, column = 2, sticky = "nsew")
 redo_both = tk.Button(window, text = "Reset Both", command = reset_both,height = 3).grid(row = 5, column = 2, sticky = "nsew")
 killbutton = tk.Button(window, text = "close program", command = kill,height = 3).grid(row = 6, column = 2, sticky = "nsew")
-min5button = tk.Button(window, text = "5 min program", command = min_5,height = 3).grid(row = 4, column = 3, sticky = "nsew")
+
 
 #main loop to keep gui window open
 window.mainloop()
