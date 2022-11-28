@@ -1,219 +1,46 @@
-import tkinter as tk
-import time
-from tkinter import messagebox
+import customtkinter as ctk
 
 
-# window setup()
-window = tk.Tk()
-window.title("BJJ Scoreboard")
-window.geometry('1080x720')
+class App(ctk.CTk):
+    def __init__(self):
+        super().__init__()
 
-#global score variables
-score_a = 0
-score_b = 0
+        self.geometry("700X800")
+        self.title("BJJ scoreboard")
+        self.minsize(300, 200)
 
-# Declaration of time variables
-hour=tk.StringVar()
-minute=tk.StringVar()
-second=tk.StringVar()
+        self.score_a = 0
+        self.score_b = 0
 
-# setting the default value as 0
-hour.set("00")
-minute.set("00")
-second.set("00")
+        self.hour=ctk.StringVar()
+        self.minute=ctk.StringVar()
+        self.second=ctk.StringVar()
 
-# Use of Entry class to take input from the user
-hourEntry= tk.Entry(window, width=3, font=("Arial",18,""),
-                 textvariable=hour)
-hourEntry.grid(row=1, column=4)
+        self.hour.set("00")
+        self.minute.set("00")
+        self.second.set("00")
+
+        self.hourEntry=ctk.CTkEntry(master=self, width=3, text_font=("Arial",18),
+        textvariable=self.hour).grid(row=1,column=4)
+
+        self.minuteEntry= ctk.CTkEntry(master=self, width=3, text_font=("Arial",18),
+                   textvariable=self.minute).grid(row=2, column=4)
   
-minuteEntry= tk.Entry(window, width=3, font=("Arial",18,""),
-                   textvariable=minute)
-minuteEntry.grid(row=2, column=4)
-  
-secondEntry= tk.Entry(window, width=3, font=("Arial",18,""),
-                   textvariable=second)
-secondEntry.grid(row=3, column=4)
+        self.secondEntry= ctk.CTkEntry(master=self, width=3, text_font=("Arial",18),
+                   textvariable=self.second).grid(row=3, column=4)
 
-def submit():
-    try:
-        # the input provided by the user is
-        # stored in here :temp
-        temp = int(hour.get())*3600 + int(minute.get())*60 + int(second.get())
-    except:
-        print("Please input the right value")
-    while temp >-1:
-         
-        # divmod(firstvalue = temp//60, secondvalue = temp%60)
-        mins,secs = divmod(temp,60)
-  
-        # Converting the input entered in mins or secs to hours,
-        # mins ,secs(input = 110 min --> 120*60 = 6600 => 1hr :
-        # 50min: 0sec)
-        hours=0
-        if mins >60:
-             
-            # divmod(firstvalue = temp//60, secondvalue
-            # = temp%60)
-            hours, mins = divmod(mins, 60)
-         
-        # using format () method to store the value up to
-        # two decimal places
-        hour.set("{0:2d}".format(hours))
-        minute.set("{0:2d}".format(mins))
-        second.set("{0:2d}".format(secs))
-  
-        # updating the GUI window after decrementing the
-        # temp value every time
-        window.update()
-        time.sleep(1)
-  
-        # when temp value = 0; then a messagebox pop's up
-        # with a message:"Time's up"
-        if (temp == 0):
-            messagebox.showinfo("BJJ scoredboard", "TIME: Your match is over ")
-            reset_both()
-        # after every one sec the value of temp will be decremented
-        # by one
-        temp -= 1
- 
+        self.redlabel = ctk.CTkLabel(master = self, text = "Red corner", text_font=("Helvetica", 35, 'bold')).grid(row = 1, column = 0, sticky = "nsew")
+        self.redlabel = ctk.CTkLabel(master = self, text = "Blue corner", text_font=("Helvetica", 35, 'bold')).grid(row = 1, column = 1, sticky = "nsew")
 
-
-#functions
-def min_5():
-    hour.set("00")
-    minute.set("05")
-    second.set("0")
-    submit()
-
-def min_3():
-    hour.set("00")
-    minute.set("03")
-    second.set("0")
-    submit()
+        self.display_a = ctk.CTkLabel(master = self, text = str(self.score_a), text_font=("Helvetica", 125)).grid(row = 2, column = 0)
+     
+        self.display_b = ctk.CTkLabel(master = self, text = str(self.score_b), text_font=("Helvetica", 125)).grid(row = 2, column = 1)
+       
+        self.red_p2_btn = ctk.CTkButton(master=self, text = "+2 red", height = 4,bg_color='PeachPuff1').grid(row = 3, column = 0, sticky = "nsew")
     
-def min_6():
-    hour.set("00")
-    minute.set("06")
-    second.set("0")
-    submit()
-        
-def red_2():
-	global score_a
-	score_a = score_a + 2
-	display_a.config(text = str(score_a))
-
-def red_3():
-	global score_a
-	score_a = score_a + 3
-	display_a.config(text = str(score_a))
- 
-def red_4():
-	global score_a
-	score_a = score_a + 4
-	display_a.config(text = str(score_a))
-
-def blue_2():
-	global score_b
-	score_b = score_b + 2
-	display_b.config(text = str(score_b))
- 
-def blue_3():
-	global score_b
-	score_b = score_b + 3
-	display_b.config(text = str(score_b))
-
-def blue_4():
-	global score_b
-	score_b = score_b + 4
-	display_b.config(text = str(score_b))
-
-def red_min1():
-	global score_a
-	score_a = score_a - 1
-	display_a.config(text = str(score_a))
-
-def blue_min1():
-	global score_b
-	score_b = score_b - 1
-	display_b.config(text = str(score_b))
-
-def reset_a():
-	global score_a
-	score_a = 0
-	display_a.config(text = str(score_a))
-
-def reset_b():
-	global score_b
-	score_b = 0
-	display_b.config(text = str(score_b))
- 
-def reset_both():
-	global score_b
-	score_b = 0
-	display_b.config(text = str(score_b))
-
-	global score_a
-	score_a = 0
-	display_a.config(text = str(score_a))
-
- 
-def kill():
-    window.destroy()
-    return None
-
-def _from_rgb(rgb):
-    return "#%02x%02x%02x" % rgb 
+    
 
 
-#scoreboard labels
-tk.Label(window, text = "Red corner", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 0, sticky = "nsew")
-tk.Label(window, text = "Blue corner", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 1, sticky = "nsew")
-tk.Label(window, text = "Hour", font=("Helvetica", 35, 'bold')).grid(row = 1, column = 5)
-tk.Label(window, text = "mins", font=("Helvetica", 35, 'bold')).grid(row = 2, column = 5)
-tk.Label(window, text = "secs", font=("Helvetica", 35, 'bold')).grid(row = 3, column = 5)
-#Team A Score Display
-display_a = tk.Label(window, text = str(score_a), font=("Helvetica", 125))
-display_a.grid(row = 2, column = 0)
-#Team B Score Display
-display_b = tk.Label(window, text = str(score_b), font=("Helvetica", 125))
-display_b.grid(row = 2, column = 1)
-
-
-
-#Match buttons
-Custom_match_btn = tk.Button(window, text='For custom match \n Enter time\n and then click here\n to begin your match',
-                             command= submit,height=4).grid(row=6, column=3)
-min5button = tk.Button(window, text = "5 min program", command = min_5,height = 3).grid(row = 4, column = 3, sticky = "nsew")
-
-min3button = tk.Button(window, text = "3 min program", command = min_3,height = 3).grid(row = 3, column = 3, sticky = "nsew")
-
-min6button = tk.Button(window, text = "6 min program", command = min_6,height = 3).grid(row = 5, column = 3, sticky = "nsew")
-
-#score buttons
-red_p2_btn = tk.Button(window, text = "+2 red", command = red_2,height = 4,bg=_from_rgb((0, 247, 0)),
-                       activebackground=_from_rgb((0, 247, 0))).grid(row = 3, column = 0, sticky = "nsew")
-red_p3_btn = tk.Button(window, text = "+3 red", command = red_3,height = 4,bg=_from_rgb((0, 247, 0)),
-                       activebackground=_from_rgb((0, 247, 0))).grid(row = 4, column = 0, sticky = "nsew")
-red_p4_btn = tk.Button(window, text = "+4 red", command = red_4,height = 4,bg=_from_rgb((0, 247, 0)),
-                       activebackground=_from_rgb((0, 247, 0))).grid(row = 5, column = 0, sticky = "nsew")
-blue_p2_btn = tk.Button(window, text = "+2 Blue ", command = blue_2,bg=_from_rgb((0, 247, 0)),
-                        activebackground=_from_rgb((0, 247, 0))).grid(row = 3, column = 1, sticky = "nsew")
-blue_p3_btn = tk.Button(window, text = "+3 Blue ", command = blue_3,bg=_from_rgb((0, 247, 0)),
-                        activebackground=_from_rgb((0, 247, 0))).grid(row = 4, column = 1, sticky = "nsew")
-blue_p4_btn = tk.Button(window, text = "+4 Blue ", command = blue_4,bg=_from_rgb((0, 247, 0)),
-                        activebackground=_from_rgb((0, 247, 0))).grid(row = 5, column = 1, sticky = "nsew")
-red_m1_btn = tk.Button(window, text = "-1 red", command = red_min1,height = 4,bg=_from_rgb((247,0, 0)),
-                       activebackground=_from_rgb((247, 0, 0))).grid(row = 6, column = 0, sticky = "nsew")
-blue_m1_btn = tk.Button(window, text = "-1 Blue", command = blue_min1,bg=_from_rgb((247,0, 0)),
-                        activebackground=_from_rgb((247,0, 0))).grid(row = 6, column = 1, sticky = "nsew")
-
-#redo and kill buttons
-reset_red = tk.Button(window, text = "Reset Red", command = reset_a,height = 3, width = 8).grid(row = 4, column = 2, sticky = "nsew")
-reset_blue = tk.Button(window, text = "Reset Blue", command = reset_b,height = 3).grid(row = 3, column = 2, sticky = "nsew")
-redo_both = tk.Button(window, text = "Reset Both", command = reset_both,height = 3).grid(row = 5, column = 2, sticky = "nsew")
-killbutton = tk.Button(window, text = "close program", command = kill,height = 3).grid(row = 6, column = 2, sticky = "nsew")
-
-
-#main loop to keep gui window open
-window.mainloop()
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
